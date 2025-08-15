@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de TIR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <img src="{{ url_for('static', filename='junttus-logo.png') }}" alt="Logo" class="logo">
+        <div class="nav-links">
+            <a href="https://junttus.com/">Voltar ao Site</a>
+            <a href="https://wa.me/+554187060687" class="whatsapp" target="_blank">WhatsApp</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <form method="POST" class="form-box">
+            <h2>Calculadora de TIR</h2>
+
+            <label>Valor da Entrada (R$):</label>
+            <input type="number" step="0.01" name="entrada" value="{{ valores.get('entrada','') }}">
+
+            <label>Nº Parcelas Anuais:</label>
+            <input type="number" name="parcelas_anuais" value="{{ valores.get('parcelas_anuais','') }}">
+
+            <label>Valor Parcela Anual (R$):</label>
+            <input type="number" step="0.01" name="valor_parcela_anual" value="{{ valores.get('valor_parcela_anual','') }}">
+
+            <label>Nº Parcelas Mensais:</label>
+            <input type="number" name="parcelas_mensais" value="{{ valores.get('parcelas_mensais','') }}">
+
+            <label>Valor Parcela Mensal (R$):</label>
+            <input type="number" step="0.01" name="valor_parcela_mensal" value="{{ valores.get('valor_parcela_mensal','') }}">
+
+            <label>Mês da Venda:</label>
+            <input type="number" name="mes_venda" value="{{ valores.get('mes_venda','') }}">
+
+            <label>Valor da Venda (R$):</label>
+            <input type="number" step="0.01" name="valor_venda" value="{{ valores.get('valor_venda','') }}">
+
+            <button type="submit" class="btn calcular">Calcular TIR</button>
+        </form>
+
+        <section class="result-box">
+            {% if resultado %}
+                {% if resultado.erro %}
+                    <p style="color: red;">Erro: {{ resultado.erro }}</p>
+                {% else %}
+                    <h3>Resultado</h3>
+                    <p><strong>Total aportado:</strong> {{ resultado.total_aporte }}</p>
+                    <p><strong>Total recebido:</strong> {{ resultado.total_recebido }}</p>
+                    <p><strong>Lucro final:</strong> {{ resultado.lucro_final }}</p>
+                    <p><strong>TIR mensal:</strong> {{ resultado.tir_mensal }}</p>
+                    <p><strong>TIR anual:</strong> {{ resultado.tir_anual }}</p>
+                    <p><strong>Rentabilidade:</strong> {{ resultado.rentabilidade_total }}</p>
+
+                    <canvas id="chart" width="600" height="300"></canvas>
+
+                    <script>
+                        const graf = {{ resultado.grafico|tojson }};
+                        const ctx = document.getElementById('chart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: graf.labels,
+                                datasets: [{
+                                    label: 'Fluxo de Caixa anual (R$)',
+                                    data: graf.values,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: { legend: { display: false } },
+                                scales: {
+                                    y: { beginAtZero: true }
+                                }
+                            }
+                        });
+                    </script>
+
+                {% endif %}
+            {% else %}
+                <p>Preencha os campos e clique em "Calcular TIR".</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

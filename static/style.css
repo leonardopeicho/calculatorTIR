@@ -1,0 +1,26 @@
+body { font-family: Arial, sans-serif; margin:0; background:#f5f5f5; }
+
+/* Headbar */
+.navbar {
+  background: white;
+  padding: 10px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+.logo { height:40px; }
+.nav-links a { margin-left:12px; text-decoration:none; color:#222; font-weight:600; }
+.nav-links a.whatsapp { background:#25D366; color:#fff; padding:6px 10px; border-radius:6px; }
+
+/* Layout principal */
+.container { display:flex; gap:30px; padding:20px; }
+.form-box { background:white; padding:18px; border-radius:8px; width:320px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
+.form-box label { display:block; margin-top:10px; font-weight:600; font-size:13px; }
+.form-box input { width:100%; padding:8px; margin-top:6px; font-size:14px; border:1px solid #ddd; border-radius:4px; }
+
+.btn.calcular { margin-top:12px; width:100%; padding:10px; background:#f8ae26; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:700; }
+.btn.calcular:hover { background:#f8ae26; }
+
+.result-box { background:white; padding:18px; border-radius:8px; flex:1; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
+.result-box h3 { margin-top:0; }
