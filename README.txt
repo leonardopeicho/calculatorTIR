@@ -17,6 +17,6 @@ PASSO A PASSO PARA USAR A CALCULADORA TIR (VS CODE ou TERMINAL)
    python app.py
 
 7. Abra o navegador e acesse:
-   http://127.0.0.1:5000
+   ""
 
 Feito por Leonardo Peichó
